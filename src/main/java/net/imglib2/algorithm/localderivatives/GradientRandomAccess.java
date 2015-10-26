@@ -5,27 +5,88 @@ import net.imglib2.Interval;
 import net.imglib2.Localizable;
 import net.imglib2.RandomAccess;
 import net.imglib2.RandomAccessible;
-import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.type.numeric.RealType;
 import net.imglib2.util.Intervals;
 import Jama.Matrix;
 
+/**
+ * Static utilities for gradient vector calculation through numerical
+ * differentiation.
+ * <p>
+ * The methods of this class return a {@link RandomAccess} that can be
+ * positioned over a {@link RandomAccessible} of type extending {@link RealType}
+ * . The {@link RandomAccess#get()} method then returns a
+ * <code>n &times; 1</code>Jama {@link Matrix}, where <code>n</code> is the
+ * dimension of the source.
+ * 
+ * @author Jean-Yves Tinevez - 2015
+ *
+ */
 public class GradientRandomAccess
 {
 	private GradientRandomAccess()
 	{}
 
-	public static final < T extends RealType< T >> RandomAccess< Matrix > randomAccess( final RandomAccessibleInterval< T > src )
+	/**
+	 * Returns a new {@link RandomAccess}, that can be positioned inside the
+	 * specified <code>interval</code>, and can be used to compute the local
+	 * gradient by numerical differentiation.
+	 * <p>
+	 * The returned instance is <b>not safe</b> for multithreading: The actual
+	 * {@link RandomAccess} returned is used to sample pixel value when
+	 * calculating the gradient. The Jama matrix returned by the
+	 * {@link RandomAccess#get()} method is the same at each call.
+	 * <p>
+	 * The gradient calculation involves numerical differentiation by central
+	 * differences with an accuracy order of 2. The actual interval effectively
+	 * sampled by the gradient calculation is expanded by the central
+	 * differences differentiation. Borders of 1 pixel are added on all sides of
+	 * all dimensions. It is the responsibility of the caller to ensure that the
+	 * source is accessible over this expanded interval.
+	 * 
+	 * @param src
+	 *            the source.
+	 * @param interval
+	 *            the interval on which the returned {@link RandomAccess} will
+	 *            be positioned.
+	 * @return a new {@link RandomAccess}.
+	 */
+	public static final < T extends RealType< T >> RandomAccess< Matrix > centralDifference( final RandomAccessible< T > src, final Interval interval )
 	{
-		return randomAccess( src, src );
+		return centralDifference( src, interval, 2 );
 	}
 
-	public static final < T extends RealType< T >> RandomAccess< Matrix > randomAccess( final RandomAccessible< T > src, final Interval interval )
-	{
-		return randomAccess( src, interval, 2 );
-	}
-
-	public static final < T extends RealType< T >> RandomAccess< Matrix > randomAccess( final RandomAccessible< T > src, final Interval interval, final int accuracyOrder )
+	/**
+	 * Returns a new {@link RandomAccess}, that can be positioned inside the
+	 * specified <code>interval</code>, and can be used to compute the local
+	 * gradient by numerical differentiation.
+	 * <p>
+	 * The returned instance is <b>not safe</b> for multithreading: The actual
+	 * {@link RandomAccess} returned is used to sample pixel value when
+	 * calculating the gradient. The Jama matrix returned by the
+	 * {@link RandomAccess#get()} method is the same at each call.
+	 * <p>
+	 * The gradient calculation involves numerical differentiation by central
+	 * differences. Supported accuracy orders are 2, 4,6 and 8. The actual
+	 * interval effectively sampled by the gradient calculation is expanded by
+	 * the central differences differentiation. Borders of 1, 2, 3 and 4 pixels
+	 * are added for accuracy orders 2, 4, 6 and 8 respectively on all sides of
+	 * all dimensions. It is the responsibility of the caller to ensure that the
+	 * source is accessible over this expanded interval.
+	 * 
+	 * @param src
+	 *            the source.
+	 * @param interval
+	 *            the interval on which the returned {@link RandomAccess} will
+	 *            be positioned.
+	 * @param accuracyOrder
+	 *            the desired accuracy orders. Orders 2, 4, 6 and 8 are
+	 *            supported.
+	 * @return a new {@link RandomAccess}.
+	 * @throws IllegalArgumentException
+	 *             if the specified accuracy order is not 2, 4, 6 or 8.
+	 */
+	public static final < T extends RealType< T >> RandomAccess< Matrix > centralDifference( final RandomAccessible< T > src, final Interval interval, final int accuracyOrder )
 	{
 		switch ( accuracyOrder )
 		{

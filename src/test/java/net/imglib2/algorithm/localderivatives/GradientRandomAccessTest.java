@@ -127,7 +127,7 @@ public class GradientRandomAccessTest
 	@Test
 	public void testRandomAccess2ndOrder()
 	{
-		final RandomAccess< Matrix > ra = GradientRandomAccess.randomAccess( img, interval, 2 );
+		final RandomAccess< Matrix > ra = GradientRandomAccess.centralDifference( img, interval, 2 );
 		// Putting a limit on tolerance only makes sense for slowly varying function (from one pixel to the next).
 		test( ra, 1e-3 );
 	}
@@ -135,21 +135,21 @@ public class GradientRandomAccessTest
 	@Test
 	public void testRandomAccess4thOrder()
 	{
-		final RandomAccess< Matrix > ra = GradientRandomAccess.randomAccess( img, interval, 4 );
+		final RandomAccess< Matrix > ra = GradientRandomAccess.centralDifference( img, interval, 4 );
 		test( ra, 1e-6 );
 	}
 
 	@Test
 	public void testRandomAccess6thOrder()
 	{
-		final RandomAccess< Matrix > ra = GradientRandomAccess.randomAccess( img, interval, 6 );
+		final RandomAccess< Matrix > ra = GradientRandomAccess.centralDifference( img, interval, 6 );
 		test( ra, 1e-8 );
 	}
 
 	@Test
 	public void testRandomAccess8thOrder()
 	{
-		final RandomAccess< Matrix > ra = GradientRandomAccess.randomAccess( img, interval, 8 );
+		final RandomAccess< Matrix > ra = GradientRandomAccess.centralDifference( img, interval, 8 );
 		test( ra, 1e-10 );
 	}
 
