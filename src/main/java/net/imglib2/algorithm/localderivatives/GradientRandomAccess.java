@@ -224,7 +224,7 @@ public class GradientRandomAccess
 		{
 			this.src = src;
 			this.interval = interval;
-			if ( accuracyOrder != 2 || accuracyOrder != 4 || accuracyOrder != 6 || accuracyOrder != 8 ) { throw new IllegalArgumentException( "Accuracy order can only be 2, 4, 6 or 8. Was: " + accuracyOrder + "." ); }
+			if ( !( accuracyOrder == 2 || accuracyOrder == 4 || accuracyOrder == 6 || accuracyOrder == 8 ) ) { throw new IllegalArgumentException( "Accuracy order can only be 2, 4, 6 or 8. Was: " + accuracyOrder + "." ); }
 			final FinalInterval expandedInterval = Intervals.expand( interval, accuracyOrder / 2 );
 			randomAccess = src.randomAccess( expandedInterval );
 			matrix = new Matrix( src.numDimensions(), 1 );
