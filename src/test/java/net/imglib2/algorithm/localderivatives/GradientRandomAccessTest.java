@@ -1,11 +1,13 @@
 package net.imglib2.algorithm.localderivatives;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import net.imglib2.Cursor;
 import net.imglib2.FinalInterval;
 import net.imglib2.Interval;
 import net.imglib2.RandomAccess;
+import net.imglib2.Sampler;
 import net.imglib2.img.Img;
 import net.imglib2.img.array.ArrayImgs;
 import net.imglib2.type.numeric.real.DoubleType;
@@ -199,6 +201,18 @@ public class GradientRandomAccessTest
 			assertTrue( "Accuracy violates tolerance limit.", dy < tolerance );
 			assertTrue( "Accuracy violates tolerance limit.", dz < tolerance );
 		}
+
+		// Test copy().
+		@SuppressWarnings( "rawtypes" )
+		final Class< ? extends RandomAccess > class1 = ra.getClass();
+		@SuppressWarnings( "rawtypes" )
+		final Class< ? extends Sampler > class2 = ra.copy().getClass();
+		assertSame( "The class returned by copy() is not the right one.", class1, class2 );
+
+		// Test copyRandomAccess().
+		@SuppressWarnings( "rawtypes" )
+		final Class< ? extends RandomAccess > class3 = ra.copyRandomAccess().getClass();
+		assertSame( "The class returned by copyRandomAccess() is not the right one.", class1, class3 );
 	}
 
 	private interface F
