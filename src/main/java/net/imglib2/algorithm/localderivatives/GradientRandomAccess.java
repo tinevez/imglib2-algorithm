@@ -104,7 +104,12 @@ public class GradientRandomAccess
 		}
 	}
 
-	public static final < T extends RealType< T >> RandomAccess<Matrix> forwardDiffereence( final RandomAccessible< T > src, final Interval interval, final int accuracyOrder )
+	public static final < T extends RealType< T >> RandomAccess< Matrix > forwardDifference( final RandomAccessible< T > src, final Interval interval )
+	{
+		return forwardDifference( src, interval, 2 );
+	}
+
+	public static final < T extends RealType< T >> RandomAccess< Matrix > forwardDifference( final RandomAccessible< T > src, final Interval interval, final int accuracyOrder )
 	{
 		final int n = src.numDimensions();
 		final long[] minmax = new long[ 2 * n ];
