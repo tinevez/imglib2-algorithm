@@ -24,10 +24,14 @@ public class GradientRandomAccessTest
 	public static void main( final String[] args ) throws Exception
 	{
 		final GradientRandomAccessTest test = new GradientRandomAccessTest();
-
 		test.setUp();
-		test.testRandomAccess2ndOrder();
-		System.out.println( "2nd order accuracy:" );
+
+		System.out.println( "\n-------------------" );
+		System.out.println( "\nCentral difference." );
+		System.out.println( "\n-------------------" );
+
+		test.testRandomAccessCD2ndOrder();
+		System.out.println( "\nCentral difference, 2nd order accuracy:" );
 		System.out.println( String.format( "  - error on X (~1/x): %.2e ± %.2e (n=%d).",
 				test.statsErrX.mean(), test.statsErrX.std(), test.statsErrX.n() ) );
 		System.out.println( String.format( "  - error on Y (Cst): %.2e ± %.2e (n=%d).",
@@ -35,8 +39,8 @@ public class GradientRandomAccessTest
 		System.out.println( String.format( "  - error on Z (~z): %.2e ± %.2e (n=%d).",
 				test.statsErrZ.mean(), test.statsErrZ.std(), test.statsErrZ.n() ) );
 
-		test.testRandomAccess4thOrder();
-		System.out.println( "4th order accuracy:" );
+		test.testRandomAccessCD4thOrder();
+		System.out.println( "\nCentral difference, 4th order accuracy:" );
 		System.out.println( String.format( "  - error on X (~1/x): %.2e ± %.2e (n=%d).",
 				test.statsErrX.mean(), test.statsErrX.std(), test.statsErrX.n() ) );
 		System.out.println( String.format( "  - error on Y (Cst): %.2e ± %.2e (n=%d).",
@@ -44,8 +48,8 @@ public class GradientRandomAccessTest
 		System.out.println( String.format( "  - error on Z (~z): %.2e ± %.2e (n=%d).",
 				test.statsErrZ.mean(), test.statsErrZ.std(), test.statsErrZ.n() ) );
 
-		test.testRandomAccess6thOrder();
-		System.out.println( "6th order accuracy:" );
+		test.testRandomAccessCD6thOrder();
+		System.out.println( "\nCentral difference, 6th order accuracy:" );
 		System.out.println( String.format( "  - error on X (~1/x): %.2e ± %.2e (n=%d).",
 				test.statsErrX.mean(), test.statsErrX.std(), test.statsErrX.n() ) );
 		System.out.println( String.format( "  - error on Y (Cst): %.2e ± %.2e (n=%d).",
@@ -53,8 +57,124 @@ public class GradientRandomAccessTest
 		System.out.println( String.format( "  - error on Z (~z): %.2e ± %.2e (n=%d).",
 				test.statsErrZ.mean(), test.statsErrZ.std(), test.statsErrZ.n() ) );
 
-		test.testRandomAccess8thOrder();
-		System.out.println( "8th order accuracy:" );
+		test.testRandomAccessCD8thOrder();
+		System.out.println( "\nCentral difference, 8th order accuracy:" );
+		System.out.println( String.format( "  - error on X (~1/x): %.2e ± %.2e (n=%d).",
+				test.statsErrX.mean(), test.statsErrX.std(), test.statsErrX.n() ) );
+		System.out.println( String.format( "  - error on Y (Cst): %.2e ± %.2e (n=%d).",
+				test.statsErrY.mean(), test.statsErrY.std(), test.statsErrY.n() ) );
+		System.out.println( String.format( "  - error on Z (~z): %.2e ± %.2e (n=%d).",
+				test.statsErrZ.mean(), test.statsErrZ.std(), test.statsErrZ.n() ) );
+
+		System.out.println( "\n-------------------" );
+		System.out.println( "\nForward difference." );
+		System.out.println( "\n-------------------" );
+
+		test.testRandomAccessFD1stOrder();
+		System.out.println( "\nForward difference, 1st order accuracy:" );
+		System.out.println( String.format( "  - error on X (~1/x): %.2e ± %.2e (n=%d).",
+				test.statsErrX.mean(), test.statsErrX.std(), test.statsErrX.n() ) );
+		System.out.println( String.format( "  - error on Y (Cst): %.2e ± %.2e (n=%d).",
+				test.statsErrY.mean(), test.statsErrY.std(), test.statsErrY.n() ) );
+		System.out.println( String.format( "  - error on Z (~z): %.2e ± %.2e (n=%d).",
+				test.statsErrZ.mean(), test.statsErrZ.std(), test.statsErrZ.n() ) );
+
+		test.testRandomAccessFD2ndOrder();
+		System.out.println( "\nForward difference, 2nd order accuracy:" );
+		System.out.println( String.format( "  - error on X (~1/x): %.2e ± %.2e (n=%d).",
+				test.statsErrX.mean(), test.statsErrX.std(), test.statsErrX.n() ) );
+		System.out.println( String.format( "  - error on Y (Cst): %.2e ± %.2e (n=%d).",
+				test.statsErrY.mean(), test.statsErrY.std(), test.statsErrY.n() ) );
+		System.out.println( String.format( "  - error on Z (~z): %.2e ± %.2e (n=%d).",
+				test.statsErrZ.mean(), test.statsErrZ.std(), test.statsErrZ.n() ) );
+
+		test.testRandomAccessFD3rdOrder();
+		System.out.println( "\nForward difference, 3rd order accuracy:" );
+		System.out.println( String.format( "  - error on X (~1/x): %.2e ± %.2e (n=%d).",
+				test.statsErrX.mean(), test.statsErrX.std(), test.statsErrX.n() ) );
+		System.out.println( String.format( "  - error on Y (Cst): %.2e ± %.2e (n=%d).",
+				test.statsErrY.mean(), test.statsErrY.std(), test.statsErrY.n() ) );
+		System.out.println( String.format( "  - error on Z (~z): %.2e ± %.2e (n=%d).",
+				test.statsErrZ.mean(), test.statsErrZ.std(), test.statsErrZ.n() ) );
+
+		test.testRandomAccessFD4thOrder();
+		System.out.println( "\nForward difference, 4th order accuracy:" );
+		System.out.println( String.format( "  - error on X (~1/x): %.2e ± %.2e (n=%d).",
+				test.statsErrX.mean(), test.statsErrX.std(), test.statsErrX.n() ) );
+		System.out.println( String.format( "  - error on Y (Cst): %.2e ± %.2e (n=%d).",
+				test.statsErrY.mean(), test.statsErrY.std(), test.statsErrY.n() ) );
+		System.out.println( String.format( "  - error on Z (~z): %.2e ± %.2e (n=%d).",
+				test.statsErrZ.mean(), test.statsErrZ.std(), test.statsErrZ.n() ) );
+
+		test.testRandomAccessFD5thOrder();
+		System.out.println( "\nForward difference, 5th order accuracy:" );
+		System.out.println( String.format( "  - error on X (~1/x): %.2e ± %.2e (n=%d).",
+				test.statsErrX.mean(), test.statsErrX.std(), test.statsErrX.n() ) );
+		System.out.println( String.format( "  - error on Y (Cst): %.2e ± %.2e (n=%d).",
+				test.statsErrY.mean(), test.statsErrY.std(), test.statsErrY.n() ) );
+		System.out.println( String.format( "  - error on Z (~z): %.2e ± %.2e (n=%d).",
+				test.statsErrZ.mean(), test.statsErrZ.std(), test.statsErrZ.n() ) );
+
+		test.testRandomAccessFD6thOrder();
+		System.out.println( "\nForward difference, 6th order accuracy:" );
+		System.out.println( String.format( "  - error on X (~1/x): %.2e ± %.2e (n=%d).",
+				test.statsErrX.mean(), test.statsErrX.std(), test.statsErrX.n() ) );
+		System.out.println( String.format( "  - error on Y (Cst): %.2e ± %.2e (n=%d).",
+				test.statsErrY.mean(), test.statsErrY.std(), test.statsErrY.n() ) );
+		System.out.println( String.format( "  - error on Z (~z): %.2e ± %.2e (n=%d).",
+				test.statsErrZ.mean(), test.statsErrZ.std(), test.statsErrZ.n() ) );
+
+		System.out.println( "\n--------------------" );
+		System.out.println( "\nBackward difference." );
+		System.out.println( "\n--------------------" );
+
+		test.testRandomAccessBD1stOrder();
+		System.out.println( "\nBackward difference, 1st order accuracy:" );
+		System.out.println( String.format( "  - error on X (~1/x): %.2e ± %.2e (n=%d).",
+				test.statsErrX.mean(), test.statsErrX.std(), test.statsErrX.n() ) );
+		System.out.println( String.format( "  - error on Y (Cst): %.2e ± %.2e (n=%d).",
+				test.statsErrY.mean(), test.statsErrY.std(), test.statsErrY.n() ) );
+		System.out.println( String.format( "  - error on Z (~z): %.2e ± %.2e (n=%d).",
+				test.statsErrZ.mean(), test.statsErrZ.std(), test.statsErrZ.n() ) );
+
+		test.testRandomAccessBD2ndOrder();
+		System.out.println( "\nBackward difference, 2nd order accuracy:" );
+		System.out.println( String.format( "  - error on X (~1/x): %.2e ± %.2e (n=%d).",
+				test.statsErrX.mean(), test.statsErrX.std(), test.statsErrX.n() ) );
+		System.out.println( String.format( "  - error on Y (Cst): %.2e ± %.2e (n=%d).",
+				test.statsErrY.mean(), test.statsErrY.std(), test.statsErrY.n() ) );
+		System.out.println( String.format( "  - error on Z (~z): %.2e ± %.2e (n=%d).",
+				test.statsErrZ.mean(), test.statsErrZ.std(), test.statsErrZ.n() ) );
+
+		test.testRandomAccessBD3rdOrder();
+		System.out.println( "\nBackward difference, 3rd order accuracy:" );
+		System.out.println( String.format( "  - error on X (~1/x): %.2e ± %.2e (n=%d).",
+				test.statsErrX.mean(), test.statsErrX.std(), test.statsErrX.n() ) );
+		System.out.println( String.format( "  - error on Y (Cst): %.2e ± %.2e (n=%d).",
+				test.statsErrY.mean(), test.statsErrY.std(), test.statsErrY.n() ) );
+		System.out.println( String.format( "  - error on Z (~z): %.2e ± %.2e (n=%d).",
+				test.statsErrZ.mean(), test.statsErrZ.std(), test.statsErrZ.n() ) );
+
+		test.testRandomAccessBD4thOrder();
+		System.out.println( "\nBackward difference, 4th order accuracy:" );
+		System.out.println( String.format( "  - error on X (~1/x): %.2e ± %.2e (n=%d).",
+				test.statsErrX.mean(), test.statsErrX.std(), test.statsErrX.n() ) );
+		System.out.println( String.format( "  - error on Y (Cst): %.2e ± %.2e (n=%d).",
+				test.statsErrY.mean(), test.statsErrY.std(), test.statsErrY.n() ) );
+		System.out.println( String.format( "  - error on Z (~z): %.2e ± %.2e (n=%d).",
+				test.statsErrZ.mean(), test.statsErrZ.std(), test.statsErrZ.n() ) );
+
+		test.testRandomAccessBD5thOrder();
+		System.out.println( "\nBackward difference, 5th order accuracy:" );
+		System.out.println( String.format( "  - error on X (~1/x): %.2e ± %.2e (n=%d).",
+				test.statsErrX.mean(), test.statsErrX.std(), test.statsErrX.n() ) );
+		System.out.println( String.format( "  - error on Y (Cst): %.2e ± %.2e (n=%d).",
+				test.statsErrY.mean(), test.statsErrY.std(), test.statsErrY.n() ) );
+		System.out.println( String.format( "  - error on Z (~z): %.2e ± %.2e (n=%d).",
+				test.statsErrZ.mean(), test.statsErrZ.std(), test.statsErrZ.n() ) );
+
+		test.testRandomAccessBD6thOrder();
+		System.out.println( "\nBackward difference, 6th order accuracy:" );
 		System.out.println( String.format( "  - error on X (~1/x): %.2e ± %.2e (n=%d).",
 				test.statsErrX.mean(), test.statsErrX.std(), test.statsErrX.n() ) );
 		System.out.println( String.format( "  - error on Y (Cst): %.2e ± %.2e (n=%d).",
@@ -87,7 +207,7 @@ public class GradientRandomAccessTest
 		final Cursor< DoubleType > cursor = img.localizingCursor();
 		final long[] pos = new long[ img.numDimensions() ];
 
-		// in X: 1/X
+		// Tests are simple to detect errors, not to benchmark it.
 		final double A = 100.;
 		fx = new F()
 		{
@@ -128,7 +248,99 @@ public class GradientRandomAccessTest
 	}
 
 	@Test
-	public void testRandomAccess2ndOrder()
+	public void testRandomAccessFD1stOrder()
+	{
+		final RandomAccess< Matrix > ra = GradientRandomAccess.forwardDifference( img, interval, 1 );
+		test( ra, 1e-1 );
+	}
+
+	@Test
+	public void testRandomAccessFD2ndOrder()
+	{
+		final RandomAccess< Matrix > ra = GradientRandomAccess.forwardDifference( img, interval, 2 );
+		test( ra, 1e-2 );
+	}
+
+	@Test
+	public void testRandomAccessFD3rdOrder()
+	{
+		final RandomAccess< Matrix > ra = GradientRandomAccess.forwardDifference( img, interval, 3 );
+		test( ra, 1e-3 );
+	}
+
+	@Test
+	public void testRandomAccessFD4thOrder()
+	{
+		final RandomAccess< Matrix > ra = GradientRandomAccess.forwardDifference( img, interval, 4 );
+		test( ra, 1e-4 );
+	}
+
+	@Test
+	public void testRandomAccessFD5thOrder()
+	{
+		final RandomAccess< Matrix > ra = GradientRandomAccess.forwardDifference( img, interval, 5 );
+		test( ra, 1e-5 );
+	}
+
+	@Test
+	public void testRandomAccessFD6thOrder()
+	{
+		final RandomAccess< Matrix > ra = GradientRandomAccess.forwardDifference( img, interval, 6 );
+		test( ra, 1e-6 );
+	}
+
+	/*
+	 * Backward
+	 */
+
+	@Test
+	public void testRandomAccessBD1stOrder()
+	{
+		final RandomAccess< Matrix > ra = GradientRandomAccess.backwardDifference( img, interval, 1 );
+		test( ra, 1e-1 );
+	}
+
+	@Test
+	public void testRandomAccessBD2ndOrder()
+	{
+		final RandomAccess< Matrix > ra = GradientRandomAccess.backwardDifference( img, interval, 2 );
+		test( ra, 1e-2 );
+	}
+
+	@Test
+	public void testRandomAccessBD3rdOrder()
+	{
+		final RandomAccess< Matrix > ra = GradientRandomAccess.backwardDifference( img, interval, 3 );
+		test( ra, 1e-3 );
+	}
+
+	@Test
+	public void testRandomAccessBD4thOrder()
+	{
+		final RandomAccess< Matrix > ra = GradientRandomAccess.backwardDifference( img, interval, 4 );
+		test( ra, 1e-4 );
+	}
+
+	@Test
+	public void testRandomAccessBD5thOrder()
+	{
+		final RandomAccess< Matrix > ra = GradientRandomAccess.backwardDifference( img, interval, 5 );
+		test( ra, 1e-5 );
+	}
+
+	@Test
+	public void testRandomAccessBD6thOrder()
+	{
+		final RandomAccess< Matrix > ra = GradientRandomAccess.backwardDifference( img, interval, 6 );
+		test( ra, 1e-6 );
+	}
+
+	/*
+	 * Central.
+	 */
+
+	@Test
+	public void testRandomAccessCD2ndOrder()
 	{
 		final RandomAccess< Matrix > ra = GradientRandomAccess.centralDifference( img, interval, 2 );
 		// Putting a limit on tolerance only makes sense for slowly varying function (from one pixel to the next).
@@ -136,21 +348,21 @@ public class GradientRandomAccessTest
 	}
 
 	@Test
-	public void testRandomAccess4thOrder()
+	public void testRandomAccessCD4thOrder()
 	{
 		final RandomAccess< Matrix > ra = GradientRandomAccess.centralDifference( img, interval, 4 );
 		test( ra, 1e-6 );
 	}
 
 	@Test
-	public void testRandomAccess6thOrder()
+	public void testRandomAccessCD6thOrder()
 	{
 		final RandomAccess< Matrix > ra = GradientRandomAccess.centralDifference( img, interval, 6 );
 		test( ra, 1e-8 );
 	}
 
 	@Test
-	public void testRandomAccess8thOrder()
+	public void testRandomAccessCD8thOrder()
 	{
 		final RandomAccess< Matrix > ra = GradientRandomAccess.centralDifference( img, interval, 8 );
 		test( ra, 1e-10 );
