@@ -1,5 +1,6 @@
 package net.imglib2.algorithm.localderivatives;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
 import net.imglib2.Cursor;
 import net.imglib2.FinalInterval;
@@ -158,6 +159,7 @@ public class GradientRandomAccessTest
 		final Cursor< DoubleType > cursor = Views.interval( img, interval ).localizingCursor();
 
 		final long[] pos = new long[ img.numDimensions() ];
+		final long[] posAfter = new long[ ra.numDimensions() ];
 
 		statsErrX = new MeanStd();
 		statsErrY = new MeanStd();
@@ -173,10 +175,14 @@ public class GradientRandomAccessTest
 
 			ra.setPosition( cursor );
 			final Matrix matrix = ra.get();
+
+			ra.localize( posAfter );
+			assertArrayEquals( "RandomAccess position changed after access.", pos, posAfter );
+
 			final double gx = matrix.get( 0, 0 );
 			final double gy = matrix.get( 1, 0 );
 			final double gz = matrix.get( 2, 0 );
-			
+
 			final double expgx = fy.eval( y ) * fz.eval( z ) * ( -1. / ( x + 1. ) / ( x + 1. ) );
 			final double expgy = 0.;
 			final double expgz = fx.eval( x ) * fy.eval( y );
