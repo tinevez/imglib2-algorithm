@@ -138,6 +138,284 @@ public class GradientRandomAccess
 		}
 	}
 
+	public static final < T extends RealType< T >> RandomAccess< Matrix > backwardDifference( final RandomAccessible< T > src, final Interval interval )
+	{
+		return backwardDifference( src, interval, 2 );
+	}
+
+	public static final < T extends RealType< T >> RandomAccess< Matrix > backwardDifference( final RandomAccessible< T > src, final Interval interval, final int accuracyOrder )
+	{
+		final int n = src.numDimensions();
+		final long[] minmax = new long[ 2 * n ];
+		for ( int d = 0; d < n; d++ )
+		{
+			minmax[ d ] = interval.min( d ) - accuracyOrder;
+			minmax[ n + d ] = interval.max( d );
+		}
+		final FinalInterval expandedInterval = Intervals.createMinMax( minmax );
+		switch ( accuracyOrder )
+		{
+		case 1:
+			return new GradientBD1stOrderRandomAccess< T >( src, expandedInterval );
+		case 2:
+			return new GradientBD2nOrderRandomAccess< T >( src, expandedInterval );
+		case 3:
+			return new GradientBD3rdOrderRandomAccess< T >( src, expandedInterval );
+		case 4:
+			return new GradientBD4thOrderRandomAccess< T >( src, expandedInterval );
+		case 5:
+			return new GradientBD5thOrderRandomAccess< T >( src, expandedInterval );
+		case 6:
+			return new GradientBD6thOrderRandomAccess< T >( src, expandedInterval );
+		default:
+			throw new IllegalArgumentException( "Accuracy order can only be 1, 2, 3, 4, 5 or 6. Was: " + accuracyOrder + "." );
+		}
+	}
+
+	/*
+	 * PRIVATE CLASSES.
+	 */
+
+	private static class GradientBD6thOrderRandomAccess< T extends RealType< T >> extends AbstractGradientRandomAccess< T >
+	{
+
+		private GradientBD6thOrderRandomAccess( final RandomAccessible< T > src, final Interval interval )
+		{
+			super( src, interval );
+		}
+
+		@Override
+		public Matrix get()
+		{
+			for ( int d = 0; d < numDimensions(); d++ )
+			{
+				randomAccess.move( 6, d );
+				final double a6 = randomAccess.get().getRealDouble();
+				randomAccess.bck( d );
+				final double a5 = randomAccess.get().getRealDouble();
+				randomAccess.bck( d );
+				final double a4 = randomAccess.get().getRealDouble();
+				randomAccess.bck( d );
+				final double a3 = randomAccess.get().getRealDouble();
+				randomAccess.bck( d );
+				final double a2 = randomAccess.get().getRealDouble();
+				randomAccess.bck( d );
+				final double a1 = randomAccess.get().getRealDouble();
+				randomAccess.bck( d );
+				final double a0 = randomAccess.get().getRealDouble();
+				matrix.set( d, 0, -1. / 6. * a6 + 6. / 5. * a5 - 15. / 4. * a4 + 20. / 3. * a3 - 15. / 2. * a2 + 6. * a1 - 49. / 20. * a0 );
+			}
+			return matrix;
+		}
+
+		@Override
+		public RandomAccess< Matrix > copyRandomAccess()
+		{
+			return new GradientBD6thOrderRandomAccess< T >( src, interval );
+		}
+
+		@Override
+		public RandomAccess< Matrix > copy()
+		{
+			return copyRandomAccess();
+		}
+	}
+
+	private static class GradientBD5thOrderRandomAccess< T extends RealType< T >> extends AbstractGradientRandomAccess< T >
+	{
+
+		private GradientBD5thOrderRandomAccess( final RandomAccessible< T > src, final Interval interval )
+		{
+			super( src, interval );
+		}
+
+		@Override
+		public Matrix get()
+		{
+			for ( int d = 0; d < numDimensions(); d++ )
+			{
+				randomAccess.move( -5, d );
+				final double a5 = randomAccess.get().getRealDouble();
+				randomAccess.fwd( d );
+				final double a4 = randomAccess.get().getRealDouble();
+				randomAccess.fwd( d );
+				final double a3 = randomAccess.get().getRealDouble();
+				randomAccess.fwd( d );
+				final double a2 = randomAccess.get().getRealDouble();
+				randomAccess.fwd( d );
+				final double a1 = randomAccess.get().getRealDouble();
+				randomAccess.fwd( d );
+				final double a0 = randomAccess.get().getRealDouble();
+				matrix.set( d, 0, -1. / 5. * a5 + 5. / 4. * a4 - 10. / 3. * a3 + 5. * a2 - 5. * a1 + 137. / 60. * a0 );
+			}
+			return matrix;
+		}
+
+		@Override
+		public RandomAccess< Matrix > copyRandomAccess()
+		{
+			return new GradientBD5thOrderRandomAccess< T >( src, interval );
+		}
+
+		@Override
+		public RandomAccess< Matrix > copy()
+		{
+			return copyRandomAccess();
+		}
+	}
+
+	private static class GradientBD4thOrderRandomAccess< T extends RealType< T >> extends AbstractGradientRandomAccess< T >
+	{
+
+		private GradientBD4thOrderRandomAccess( final RandomAccessible< T > src, final Interval interval )
+		{
+			super( src, interval );
+		}
+
+		@Override
+		public Matrix get()
+		{
+			for ( int d = 0; d < numDimensions(); d++ )
+			{
+				randomAccess.move( -4, d );
+				final double a4 = randomAccess.get().getRealDouble();
+				randomAccess.fwd( d );
+				final double a3 = randomAccess.get().getRealDouble();
+				randomAccess.fwd( d );
+				final double a2 = randomAccess.get().getRealDouble();
+				randomAccess.fwd( d );
+				final double a1 = randomAccess.get().getRealDouble();
+				randomAccess.fwd( d );
+				final double a0 = randomAccess.get().getRealDouble();
+				matrix.set( d, 0, 1. / 4. * a4 - 4. / 3. * a3 + 3. * a2 - 4. * a1 + 25. / 12. * a0 );
+			}
+			return matrix;
+		}
+
+		@Override
+		public RandomAccess< Matrix > copyRandomAccess()
+		{
+			return new GradientBD4thOrderRandomAccess< T >( src, interval );
+		}
+
+		@Override
+		public RandomAccess< Matrix > copy()
+		{
+			return copyRandomAccess();
+		}
+	}
+
+	private static class GradientBD3rdOrderRandomAccess< T extends RealType< T >> extends AbstractGradientRandomAccess< T >
+	{
+
+		private GradientBD3rdOrderRandomAccess( final RandomAccessible< T > src, final Interval interval )
+		{
+			super( src, interval );
+		}
+
+		@Override
+		public Matrix get()
+		{
+			for ( int d = 0; d < numDimensions(); d++ )
+			{
+				randomAccess.move( -3, d );
+				final double a3 = randomAccess.get().getRealDouble();
+				randomAccess.fwd( d );
+				final double a2 = randomAccess.get().getRealDouble();
+				randomAccess.fwd( d );
+				final double a1 = randomAccess.get().getRealDouble();
+				randomAccess.fwd( d );
+				final double a0 = randomAccess.get().getRealDouble();
+				matrix.set( d, 0, -1. / 3. * a3 + 3. / 2. * a2 - 3. * a1 + 11. / 6. * a0 );
+			}
+			return matrix;
+		}
+
+		@Override
+		public RandomAccess< Matrix > copyRandomAccess()
+		{
+			return new GradientBD3rdOrderRandomAccess< T >( src, interval );
+		}
+
+		@Override
+		public RandomAccess< Matrix > copy()
+		{
+			return copyRandomAccess();
+		}
+	}
+
+	private static class GradientBD2nOrderRandomAccess< T extends RealType< T >> extends AbstractGradientRandomAccess< T >
+	{
+
+		private GradientBD2nOrderRandomAccess( final RandomAccessible< T > src, final Interval interval )
+		{
+			super( src, interval );
+		}
+
+		@Override
+		public Matrix get()
+		{
+			for ( int d = 0; d < numDimensions(); d++ )
+			{
+				randomAccess.move( -2, d );
+				final double a2 = randomAccess.get().getRealDouble();
+				randomAccess.fwd( d );
+				final double a1 = randomAccess.get().getRealDouble();
+				randomAccess.fwd( d );
+				final double a0 = randomAccess.get().getRealDouble();
+				matrix.set( d, 0, 1. / 2. * a2 - 2. * a1 + 3. / 2. * a0 );
+			}
+			return matrix;
+		}
+
+		@Override
+		public RandomAccess< Matrix > copyRandomAccess()
+		{
+			return new GradientBD2nOrderRandomAccess< T >( src, interval );
+		}
+
+		@Override
+		public RandomAccess< Matrix > copy()
+		{
+			return copyRandomAccess();
+		}
+	}
+
+	private static class GradientBD1stOrderRandomAccess< T extends RealType< T >> extends AbstractGradientRandomAccess< T >
+	{
+
+		private GradientBD1stOrderRandomAccess( final RandomAccessible< T > src, final Interval interval )
+		{
+			super( src, interval );
+		}
+
+		@Override
+		public Matrix get()
+		{
+			for ( int d = 0; d < numDimensions(); d++ )
+			{
+				final double a0 = randomAccess.get().getRealDouble();
+				randomAccess.bck( d );
+				final double a1 = randomAccess.get().getRealDouble();
+				randomAccess.fwd( d );
+				matrix.set( d, 0, -a1 + a0 );
+			}
+			return matrix;
+		}
+
+		@Override
+		public RandomAccess< Matrix > copyRandomAccess()
+		{
+			return new GradientBD1stOrderRandomAccess< T >( src, interval );
+		}
+
+		@Override
+		public RandomAccess< Matrix > copy()
+		{
+			return copyRandomAccess();
+		}
+	}
+
 	private static class GradientFD6thOrderRandomAccess< T extends RealType< T >> extends AbstractGradientRandomAccess< T >
 	{
 
@@ -165,7 +443,6 @@ public class GradientRandomAccess
 				final double a1 = randomAccess.get().getRealDouble();
 				randomAccess.bck( d );
 				final double a0 = randomAccess.get().getRealDouble();
-				randomAccess.bck( d );
 				matrix.set( d, 0, -1. / 6. * a6 + 6. / 5. * a5 - 15. / 4. * a4 + 20. / 3. * a3 - 15. / 2. * a2 + 6. * a1 - 49. / 20. * a0 );
 			}
 			return matrix;
@@ -209,7 +486,6 @@ public class GradientRandomAccess
 				final double a1 = randomAccess.get().getRealDouble();
 				randomAccess.bck( d );
 				final double a0 = randomAccess.get().getRealDouble();
-				randomAccess.bck( d );
 				matrix.set( d, 0, 1. / 5. * a5 - 5. / 4. * a4 + 10. / 3. * a3 - 5. * a2 + 5. * a1 - 137. / 60. * a0 );
 			}
 			return matrix;
@@ -251,7 +527,6 @@ public class GradientRandomAccess
 				final double a1 = randomAccess.get().getRealDouble();
 				randomAccess.bck( d );
 				final double a0 = randomAccess.get().getRealDouble();
-				randomAccess.bck( d );
 				matrix.set( d, 0, -1. / 4. * a4 + 4. / 3. * a3 - 3. * a2 + 4. * a1 - 25. / 12. * a0 );
 			}
 			return matrix;
@@ -291,7 +566,6 @@ public class GradientRandomAccess
 				final double a1 = randomAccess.get().getRealDouble();
 				randomAccess.bck( d );
 				final double a0 = randomAccess.get().getRealDouble();
-				randomAccess.bck( d );
 				matrix.set( d, 0, 1. / 3. * a3 - 3. / 2. * a2 + 3. * a1 - 11. / 6. * a0 );
 			}
 			return matrix;
@@ -329,7 +603,6 @@ public class GradientRandomAccess
 				final double a1 = randomAccess.get().getRealDouble();
 				randomAccess.bck( d );
 				final double a0 = randomAccess.get().getRealDouble();
-				randomAccess.bck( d );
 				matrix.set( d, 0, -1. / 2. * a2 + 2. * a1 - 3. / 2. * a0 );
 			}
 			return matrix;
