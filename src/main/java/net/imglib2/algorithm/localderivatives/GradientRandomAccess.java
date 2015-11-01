@@ -16,11 +16,10 @@ import Jama.Matrix;
  * The methods of this class return a {@link RandomAccess} that can be
  * positioned over a {@link RandomAccessible} of type extending {@link RealType}
  * . The {@link RandomAccess#get()} method then returns a
- * <code>n &times; 1</code>Jama {@link Matrix}, where <code>n</code> is the
+ * <code>n &times; 1</code> Jama {@link Matrix}, where <code>n</code> is the
  * dimension of the source.
  *
  * @author Jean-Yves Tinevez - 2015
- *
  */
 public class GradientRandomAccess
 {
@@ -30,7 +29,9 @@ public class GradientRandomAccess
 	/**
 	 * Returns a new {@link RandomAccess}, that can be positioned inside the
 	 * specified <code>interval</code>, and can be used to compute the local
-	 * gradient by numerical differentiation.
+	 * gradient by numerical differentiation. The gradient be accessed as a
+	 * <code>n &times; 1</code> Jama {@link Matrix}, where <code>n</code> is the
+	 * dimensionality of the source.
 	 * <p>
 	 * The returned instance is <b>not safe</b> for multithreading: The actual
 	 * {@link RandomAccess} returned is used to sample pixel value when
@@ -59,7 +60,9 @@ public class GradientRandomAccess
 	/**
 	 * Returns a new {@link RandomAccess}, that can be positioned inside the
 	 * specified <code>interval</code>, and can be used to compute the local
-	 * gradient by numerical differentiation.
+	 * gradient by numerical differentiation. The gradient be accessed as a
+	 * <code>n &times; 1</code> Jama {@link Matrix}, where <code>n</code> is the
+	 * dimensionality of the source.
 	 * <p>
 	 * The returned instance is <b>not safe</b> for multithreading: The actual
 	 * {@link RandomAccess} returned is used to sample pixel value when
@@ -107,7 +110,9 @@ public class GradientRandomAccess
 	/**
 	 * Returns a new {@link RandomAccess}, that can be positioned inside the
 	 * specified <code>interval</code>, and can be used to compute the local
-	 * gradient by numerical differentiation.
+	 * gradient by numerical differentiation. The gradient be accessed as a
+	 * <code>n &times; 1</code> Jama {@link Matrix}, where <code>n</code> is the
+	 * dimensionality of the source.
 	 * <p>
 	 * The returned instance is <b>not safe</b> for multithreading: The actual
 	 * {@link RandomAccess} returned is used to sample pixel value when
@@ -136,7 +141,9 @@ public class GradientRandomAccess
 	/**
 	 * Returns a new {@link RandomAccess}, that can be positioned inside the
 	 * specified <code>interval</code>, and can be used to compute the local
-	 * gradient by numerical differentiation.
+	 * gradient by numerical differentiation. The gradient be accessed as a
+	 * <code>n &times; 1</code> Jama {@link Matrix}, where <code>n</code> is the
+	 * dimensionality of the source.
 	 * <p>
 	 * The returned instance is <b>not safe</b> for multithreading: The actual
 	 * {@link RandomAccess} returned is used to sample pixel value when
@@ -195,7 +202,9 @@ public class GradientRandomAccess
 	/**
 	 * Returns a new {@link RandomAccess}, that can be positioned inside the
 	 * specified <code>interval</code>, and can be used to compute the local
-	 * gradient by numerical differentiation.
+	 * gradient by numerical differentiation. The gradient be accessed as a
+	 * <code>n &times; 1</code> Jama {@link Matrix}, where <code>n</code> is the
+	 * dimensionality of the source.
 	 * <p>
 	 * The returned instance is <b>not safe</b> for multithreading: The actual
 	 * {@link RandomAccess} returned is used to sample pixel value when
@@ -224,7 +233,9 @@ public class GradientRandomAccess
 	/**
 	 * Returns a new {@link RandomAccess}, that can be positioned inside the
 	 * specified <code>interval</code>, and can be used to compute the local
-	 * gradient by numerical differentiation.
+	 * gradient by numerical differentiation. The gradient be accessed as a
+	 * <code>n &times; 1</code> Jama {@link Matrix}, where <code>n</code> is the
+	 * dimensionality of the source.
 	 * <p>
 	 * The returned instance is <b>not safe</b> for multithreading: The actual
 	 * {@link RandomAccess} returned is used to sample pixel value when
