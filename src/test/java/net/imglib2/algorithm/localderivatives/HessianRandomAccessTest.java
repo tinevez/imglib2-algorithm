@@ -38,6 +38,15 @@ public class HessianRandomAccessTest
 				test.statsErrY.mean(), test.statsErrY.std(), test.statsErrY.n() ) );
 		System.out.println( String.format( "  - error on Z (Cst): %.2e ± %.2e (n=%d).",
 				test.statsErrZ.mean(), test.statsErrZ.std(), test.statsErrZ.n() ) );
+
+		test.testRandomAccessCD4thOrder();
+		System.out.println( "\nCentral difference, 4th order accuracy:" );
+		System.out.println( String.format( "  - error on X (~x^2): %.2e ± %.2e (n=%d).",
+				test.statsErrX.mean(), test.statsErrX.std(), test.statsErrX.n() ) );
+		System.out.println( String.format( "  - error on Y (~y^2): %.2e ± %.2e (n=%d).",
+				test.statsErrY.mean(), test.statsErrY.std(), test.statsErrY.n() ) );
+		System.out.println( String.format( "  - error on Z (Cst): %.2e ± %.2e (n=%d).",
+				test.statsErrZ.mean(), test.statsErrZ.std(), test.statsErrZ.n() ) );
 	}
 
 	private Img< DoubleType > img;
@@ -102,6 +111,13 @@ public class HessianRandomAccessTest
 	public void testRandomAccessCD2ndOrder()
 	{
 		final RandomAccess< Matrix > ra = HessianRandomAccess.centralDifference( img, interval, 2 );
+		test( ra, 1e-12 );
+	}
+
+	@Test
+	public void testRandomAccessCD4thOrder()
+	{
+		final RandomAccess< Matrix > ra = HessianRandomAccess.centralDifference( img, interval, 4 );
 		test( ra, 1e-12 );
 	}
 
